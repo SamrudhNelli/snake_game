@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <ncurses.h>
+//#include <ncurses.h>
 #include <conio.h>
 #include <math.h>
 #include <stdlib.h>
