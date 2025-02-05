@@ -1,14 +1,56 @@
 #include <stdio.h>
-//#include <ncurses.h>
-#include <conio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
-#include <Windows.h>
 #include <unistd.h>
 #include <stdbool.h>
 
 #define n 40
+
+#ifdef _WIN32
+    #include <conio.h>
+    #inlcude <Windows.h>
+    #define slp() sleep();
+    #define device 1
+
+#elif __linux__
+    #include <unistd.h>
+    #include <stdio.h>
+    #include <sys/select.h>
+    #include <termios.h>
+    #include <sys/ioctl.h>
+    #define device 2
+
+    int kbhit() 
+    {
+        static const int STDIN = 0;
+        static bool initialized = false;
+
+        if (! initialized) {
+            // Use termios to turn off line buffering
+            termios term;
+            tcgetattr(STDIN, &term);
+            term.c_lflag &= ~ICANON;
+            tcsetattr(STDIN, TCSANOW, &term);
+            setbuf(stdin, NULL);
+            initialized = true;
+        }
+
+        int bytesWaiting;
+        ioctl(STDIN, FIONREAD, &bytesWaiting);
+        return bytesWaiting;
+    }
+
+    void sleep_ms(int milliseconds)
+    {
+        // Convert milliseconds to microseconds
+        usleep(milliseconds * 1000);
+    }
+
+#else
+    #error "Unknown OS used!!"
+
+#endif
 
 
 class game
@@ -142,10 +184,9 @@ int game::snake(int w, int a, int s, int d)
 
 int game::snake_game()
 {
-
-    changemode(1);
     FILE *fptr;
-    fptr = fopen("snake_game_leaderboard.txt","r+");
+    fptr = fopen("snake_game_leaderboard.txt","a+");
+    fseek(fptr, 0, SEEK_SET);
 
     int c = fgetc(fptr);
     if (c == EOF) 
@@ -185,7 +226,7 @@ int game::snake_game()
                 for(int j = 0; j < n; j++)
                     printf("%c",A[i][j]);
                 if(i == 8)
-                    printf("                             !!Help!! :      ");
+                    printf("                                     !!Help!! :      ");
                 if(i == 9)
                     printf("                           1) Move UP : w / W / ^ arrow");
                 if(i == 10)
@@ -197,7 +238,7 @@ int game::snake_game()
                 if(i == 13)
                     printf("                           5) Increase snake speed : f ");
                 if(i == 14)
-                    printf("                           6) Decrease snake speed : d ");
+                    printf("                           6) Decrease snake speed : g ");
                 if(i == 15)
                     printf("                           7) Quit : q / Enter ");
                 
@@ -205,12 +246,20 @@ int game::snake_game()
             }
             printf("     Last Highscore: %d by %s \n",highscore,user);
             cont = this->snake(0,0,0,0);
-            sleep(snake_speed);
-            system("cls");
+            if(device == 1)
+            {
+                sleep(snake_speed);
+                system("cls");
+            }
+            else if(device == 2)
+            {
+                sleep_ms(snake_speed);
+                system("clear");
+            }
         }
         if(cont)
         {
-            char ch = getch();
+            char ch = getchar();
             if(ch == 'w' || ch == 'W' || (int)ch == 72)
                 cont = this->snake(1,0,0,0);
             if(ch == 'a' || ch == 'A' || (int)ch == 75)
@@ -221,11 +270,10 @@ int game::snake_game()
                 cont = this->snake(0,0,0,1);
             if(ch == 'f')
                 snake_speed /= 2;
-            if(ch == 'd')
+            if(ch == 'g')
                 snake_speed *= 2;
             if(ch == 'q' || (int)ch == 13)
                 cont = 0;
-
         }
         
     }
@@ -328,7 +376,6 @@ int game::snake_game()
     char e;
     printf("\nWould you like to play again? (y/n) : ");
     scanf(" %c",&e);
-    changemode(0);
     if(e == 'y' || e == 'Y')
         return 1;
     return 0;
