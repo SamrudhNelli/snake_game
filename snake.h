@@ -259,21 +259,47 @@ int game::snake_game()
         }
         if(cont)
         {
-            char ch = getchar();
-            if(ch == 'w' || ch == 'W' || (int)ch == 72)
-                cont = this->snake(1,0,0,0);
-            if(ch == 'a' || ch == 'A' || (int)ch == 75)
-                cont = this->snake(0,1,0,0);
-            if(ch == 's' || ch == 'S' || (int)ch == 80)
-                cont = this->snake(0,0,1,0);
-            if(ch == 'd' || ch == 'D' || (int)ch == 77)
-                cont = this->snake(0,0,0,1);
-            if(ch == 'f')
-                snake_speed /= 2;
-            if(ch == 'g')
-                snake_speed *= 2;
-            if(ch == 'q' || (int)ch == 13)
-                cont = 0;
+            char ch;
+            scanf("%c", &ch);
+            int k = 0;
+            if(ch == 27)
+            {
+                scanf("%c", &ch);
+                k++;
+            }
+            if(k && ch == 91)
+            {
+                scanf("%c", &ch);
+                k++;
+            }
+            if(k == 2)
+            {
+                if(ch == 65)
+                    cont = this->snake(1,0,0,0);
+                else if(ch == 68)
+                    cont = this->snake(0,1,0,0);
+                else if(ch == 66)
+                    cont = this->snake(0,0,1,0);
+                else if(ch == 67)
+                    cont = this->snake(0,0,0,1);
+            }
+            else
+            {
+                if(ch == 'w' || ch == 'W')
+                    cont = this->snake(1,0,0,0);
+                if(ch == 'a' || ch == 'A')
+                    cont = this->snake(0,1,0,0);
+                if(ch == 's' || ch == 'S')
+                    cont = this->snake(0,0,1,0);
+                if(ch == 'd' || ch == 'D')
+                    cont = this->snake(0,0,0,1);
+                if(ch == 'f')
+                    snake_speed /= 2;
+                if(ch == 'g')
+                    snake_speed *= 2;
+                if(ch == 'q' || (int)ch == 13)
+                    cont = 0;
+            }
         }
         
     }
