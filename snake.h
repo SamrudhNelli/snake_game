@@ -4,12 +4,13 @@
 #include <time.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <vector>
 
 #define n 40
 
 #ifdef _WIN32
     #include <conio.h>
-    #inlcude <Windows.h>
+    #include <Windows.h>
     #define slp() sleep();
     #define device 1
 
@@ -57,7 +58,8 @@ class game
 {
     public:
     int f_x, f_y;
-    int head_x = 20, head_y = 20, snake_length = 3, *snake_x, *snake_y, snake_dir = 1, snake_speed = 300; // 1->right, -1->left, 2->up, -2->down
+    int head_x = 20, head_y = 20, snake_length = 3, snake_dir = 1, snake_speed = 300; // 1->right, -1->left, 2->up, -2->down
+    std::vector<int> snake_x, snake_y;
     char A[n][n];
     void fruit();
     void init();
@@ -68,6 +70,8 @@ class game
 
 void game::fruit()
 {
+    snake_x.resize(this->snake_length);
+    snake_y.resize(this->snake_length);
     bool fruit_exists = false;
     while(!fruit_exists)
     {
@@ -75,7 +79,7 @@ void game::fruit()
         int x = rand() % 40;
         int y = rand() % 40;
         int token = 1;
-        for(int i = 0; i < snake_length; i++)
+        for(int i = 0; i < this->snake_length; i++)
         {
             if(x == snake_x[i] || y == snake_y[i])
             {
@@ -97,10 +101,11 @@ void game::fruit()
 
 void game::init()
 {
-    snake_x = (int *)malloc(snake_length*sizeof(int));
-    snake_y = (int *)malloc(snake_length*sizeof(int));
+    snake_x.resize(this->snake_length);
+    snake_y.resize(this->snake_length);
     for(int i = 0; i < snake_length; i++)
     {
+        snake_x[i] = head_x;
         snake_x[i] = head_x;
         snake_y[i] = head_y - i;
         if(!i)
@@ -163,6 +168,8 @@ int game::snake(int w, int a, int s, int d)
     {
         this->fruit();
         snake_length ++;
+        snake_x.resize(this->snake_length);
+        snake_y.resize(this->snake_length);
         snake_x[snake_length-1] = tx;
         snake_y[snake_length-1] = ty;
         A[tx][ty] = t;
@@ -326,14 +333,14 @@ int game::snake_game()
     printf("*                                      *\n");
     printf("*                                      *\n");
     printf("*          You Failed!!!!!!            *\n");
-    printf("*              XD                      *\n");
+    printf("*                                      *\n");
     printf("*                                      *\n");
     printf("*                                      *\n");
     printf("*                                      *\n");
     printf("*                                      *\n");
     printf("*                                      *\n");
     printf("*          Your Score :                *\n");
-    printf("*%14d                        *\n",score);
+    printf("*%16d                      *\n",score);
     printf("*                                      *\n");
     printf("*                                      *\n");
     printf("*                                      *\n");
@@ -386,15 +393,15 @@ int game::snake_game()
     }
     else
     {
-        printf("\nWould you like to save your result ? (y/n)\n");
+        printf("\nWould you like to save your result ? (y/n) : ");
         scanf("%c",&d);
         if(d == 'y')
         {
-            printf("Enter the player name : ");
+            printf("\nEnter the player name : ");
             scanf("%s",tuser);
-            printf("Saved successfully !!\n");
+            printf("\nSaved successfully !!");
         }
-        printf("Thanks for playing the game!!\n");
+        printf("\nThanks for playing the game!!\n");
         fseek(fptr,0,SEEK_END);
         fprintf(fptr,"%s %d\n",tuser,score);
     }

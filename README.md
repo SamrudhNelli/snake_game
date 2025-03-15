@@ -1,2 +1,2 @@
 # snake_game
-Implementing the classic snake game using c++
+Implementing a cross-platform version of the classic snake game using C/C++
