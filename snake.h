@@ -393,7 +393,7 @@ int game::snake_game()
     }
     else
     {
-        printf("\nWould you like to save your result ? (y/n) : ");
+        printf("\nWould you like to save your result ? (y/N) : ");
         scanf("%c",&d);
         if(d == 'y')
         {
@@ -407,7 +407,7 @@ int game::snake_game()
     }
 
     char e;
-    printf("\nWould you like to play again? (y/n) : ");
+    printf("\nWould you like to play again? (y/N) : ");
     scanf(" %c",&e);
     if(e == 'y' || e == 'Y')
         return 1;
