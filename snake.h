@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -12,7 +13,11 @@
     #include <conio.h>
     #include <Windows.h>
     #define slp() sleep();
-    #define device 1
+    void refresh_screen(int snake_speed)
+    {
+        slp(snake_speed);
+        system("cls");
+    }
 
 #elif __linux__
     #include <unistd.h>
@@ -20,9 +25,8 @@
     #include <sys/select.h>
     #include <termios.h>
     #include <sys/ioctl.h>
-    #define device 2
 
-    int kbhit() 
+    inline int kbhit() 
     {
         static const int STDIN = 0;
         static bool initialized = false;
@@ -42,10 +46,10 @@
         return bytesWaiting;
     }
 
-    void sleep_ms(int milliseconds)
+    void refresh_screen(int snake_speed)
     {
-        // Convert milliseconds to microseconds
-        usleep(milliseconds * 1000);
+        usleep(snake_speed * 1000);
+        system("clear");
     }
 
 #else
@@ -253,16 +257,7 @@ int game::snake_game()
             }
             printf("     Last Highscore: %d by %s \n",highscore,user);
             cont = this->snake(0,0,0,0);
-            if(device == 1)
-            {
-                sleep(snake_speed);
-                system("cls");
-            }
-            else if(device == 2)
-            {
-                sleep_ms(snake_speed);
-                system("clear");
-            }
+            refresh_screen(snake_speed);
         }
         if(cont)
         {
@@ -406,10 +401,10 @@ int game::snake_game()
         fprintf(fptr,"%s %d\n",tuser,score);
     }
 
-    char e;
+    std::string e;
     printf("\nWould you like to play again? (y/N) : ");
-    scanf(" %c",&e);
-    if(e == 'y' || e == 'Y')
+    getline(std::cin, e);
+    if(e[0] == 'y' || e[0] == 'Y')
         return 1;
     return 0;
 }
