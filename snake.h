@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include <vector>
 
-#define n 40
+#define n 40 // Grid size
 
 #ifdef _WIN32
     #include <conio.h>
@@ -74,8 +74,8 @@ class game
 
 void game::fruit()
 {
-    snake_x.resize(this->snake_length);
-    snake_y.resize(this->snake_length);
+    // snake_x.resize(this->snake_length);
+    // snake_y.resize(this->snake_length);
     bool fruit_exists = false;
     while(!fruit_exists)
     {
@@ -172,10 +172,8 @@ int game::snake(int w, int a, int s, int d)
     {
         this->fruit();
         snake_length ++;
-        snake_x.resize(this->snake_length);
-        snake_y.resize(this->snake_length);
-        snake_x[snake_length-1] = tx;
-        snake_y[snake_length-1] = ty;
+        snake_x.push_back(tx);
+        snake_y.push_back(ty);
         A[tx][ty] = t;
     }
     for(int i = 1; i < snake_length; i++)
