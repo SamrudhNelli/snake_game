@@ -233,27 +233,35 @@ int game::snake_game()
             for(int i = 0; i < n; i++)
             {
                 for(int j = 0; j < n; j++)
+                {
+                    if(j == 0)
+                        printf("                                                      ");
                     printf("%c",A[i][j]);
-                if(i == 8)
+                }
+                if(i == 16)
+                    printf("                                  Current Score :    ");
+                else if(i == 17)
+                    printf("                                        %d", snake_length - 3);
+                else if(i == 25)
                     printf("                                     !!Help!! :      ");
-                if(i == 9)
+                else if(i == 26)
                     printf("                           1) Move UP : w / W / ^ arrow");
-                if(i == 10)
+                else if(i == 27)
                     printf("                           2) Move Left : a / A / v arrow ");
-                if(i == 11)
+                else if(i == 28)
                     printf("                           3) Move Down : s / S / < arrow ");
-                if(i == 12)
+                else if(i == 29)
                     printf("                           4) Move Right : d / D / > arrow ");
-                if(i == 13)
+                else if(i == 30)
                     printf("                           5) Increase snake speed : f ");
-                if(i == 14)
+                else if(i == 31)
                     printf("                           6) Decrease snake speed : g ");
-                if(i == 15)
+                else if(i == 32)
                     printf("                           7) Quit : q / Enter ");
                 
                 printf("\n");
             }
-            printf("     Last Highscore: %d by %s \n",highscore,user);
+            printf("                                                           Last Highscore: %d by %s \n",highscore,user);
             cont = this->snake(0,0,0,0);
             refresh_screen(snake_speed);
         }
@@ -306,56 +314,56 @@ int game::snake_game()
 
     score = snake_length - 3;
 
-    printf("****************************************\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*            --------------            *\n");
-    printf("*            |            |            *\n");
-    printf("*            |            |            *\n");
-    printf("*            ------------>|            *\n");
-    printf("*                         |            *\n");
-    printf("*                         |            *\n");
-    printf("*                       ---            *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*          You Failed!!!!!!            *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*          Your Score :                *\n");
-    printf("*%16d                      *\n",score);
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("*                                      *\n");
-    printf("****************************************\n");
-    printf("****************************************\n");
+    printf("                                                      ****************************************\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *            --------------            *\n");
+    printf("                                                      *            |            |            *\n");
+    printf("                                                      *            |            |            *\n");
+    printf("                                                      *            ------------>|            *\n");
+    printf("                                                      *                         |            *\n");
+    printf("                                                      *                         |            *\n");
+    printf("                                                      *                       ---            *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *          You Failed!!!!!!            *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *          Your Score :                *\n");
+    printf("                                                      *%16d                      *\n",score);
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      *                                      *\n");
+    printf("                                                      ****************************************\n");
+    printf("                                                      ****************************************\n");
 
     char d = 'y';
 
     if(score > highscore)
     {
-        printf("\nCongratulations on beating the highscore!!\n");
-        printf("Your name please : ");
+        printf("\n                                                      Congratulations on beating the highscore!!\n");
+        printf("                                                      Your name please : ");
         scanf("%s",tuser);
-        printf("Thank You for enjoying the game!!\n");
+        printf("                                                      Thank You for enjoying the game!!\n");
         
         int line_count = 0;
 
@@ -386,23 +394,23 @@ int game::snake_game()
     }
     else
     {
-        printf("\nWould you like to save your result ? (y/N) : ");
+        printf("\n                                                      Would you like to save your result ? (y/N) : ");
         scanf("%c",&d);
         if(d == 'y')
         {
-            printf("\nEnter the player name : ");
+            printf("\n                                                      Enter the player name : ");
             scanf("%s",tuser);
-            printf("\nSaved successfully !!");
+            printf("\n                                                      Saved successfully !!");
         }
-        printf("\nThanks for playing the game!!\n");
+        printf("\n                                                      Thanks for playing the game!!\n");
         fseek(fptr,0,SEEK_END);
         fprintf(fptr,"%s %d\n",tuser,score);
     }
 
-    std::string e;
-    printf("\nWould you like to play again? (y/N) : ");
-    getline(std::cin, e);
-    if(e[0] == 'y' || e[0] == 'Y')
+    char e;
+    printf("\n                                                      Would you like to play again? (y/N) : ");
+    scanf(" %c",&e);
+    if(e == 'y' || e == 'Y')
         return 1;
     return 0;
 }
