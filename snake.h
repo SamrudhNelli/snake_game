@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include <vector>
 
-#define n 40 // Grid size
+#define GRID_SIZE 40 // Grid size
 
 #ifdef _WIN32
     #include <conio.h>
@@ -73,7 +73,7 @@ class game
     int f_x, f_y;
     int head_x = 20, head_y = 20, snake_length = 3, snake_dir = 1, snake_speed = 300; // 1->right, -1->left, 2->up, -2->down
     std::vector<int> snake_x, snake_y;
-    char A[n][n];
+    char A[GRID_SIZE][GRID_SIZE];
     void fruit();
     void init();
     int snake(int,int,int,int);
@@ -100,7 +100,7 @@ void game::fruit()
                 break;
             }
         }
-        if(x == 0 || x == n-1 || y == 0 || y == n-1)
+        if(x == 0 || x == GRID_SIZE-1 || y == 0 || y == GRID_SIZE-1)
             token = 0;
         if(token)
         {
@@ -192,7 +192,7 @@ int game::snake(int w, int a, int s, int d)
             return 0;
         }
     }
-    if(snake_x[0] == 0 || snake_x[0] == n-1 || snake_y[0] == 0 || snake_y[0] == n-1)
+    if(snake_x[0] == 0 || snake_x[0] == GRID_SIZE-1 || snake_y[0] == 0 || snake_y[0] == GRID_SIZE-1)
     {
         return 0;
     }
@@ -224,12 +224,12 @@ int game::snake_game()
 
 
     int cont = 1;
-    for(int i = 0; i < n; i++)
-    for(int j = 0; j < n; j++)
+    for(int i = 0; i < GRID_SIZE; i++)
+    for(int j = 0; j < GRID_SIZE; j++)
     {
-    if(i == 0 || i == n-1)
+    if(i == 0 || i == GRID_SIZE-1)
         A[i][j] = '*';
-    else if(j == 0 || j == n-1)
+    else if(j == 0 || j == GRID_SIZE-1)
         A[i][j] = '*';
     else
         A[i][j] = ' ';
@@ -239,9 +239,9 @@ int game::snake_game()
     {
         while(!kbhit() && cont)
         {
-            for(int i = 0; i < n; i++)
+            for(int i = 0; i < GRID_SIZE; i++)
             {
-                for(int j = 0; j < n; j++)
+                for(int j = 0; j < GRID_SIZE; j++)
                 {
                     if(j == 0)
                         printf("                                                      ");
