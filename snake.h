@@ -14,7 +14,7 @@
     #include <Windows.h>
     void refresh_screen(int snake_speed)
     {
-        sleep(snake_speed);
+        Sleep(snake_speed);
         system("cls");
     }
 
