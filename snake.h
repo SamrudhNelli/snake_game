@@ -12,11 +12,15 @@
 #ifdef _WIN32
     #include <conio.h>
     #include <Windows.h>
-    #define slp() sleep();
     void refresh_screen(int snake_speed)
     {
-        slp(snake_speed);
+        sleep(snake_speed);
         system("cls");
+    }
+
+    char get_input()
+    {
+        return getch();
     }
 
 #elif __linux__
@@ -50,6 +54,11 @@
     {
         usleep(snake_speed * 1000);
         system("clear");
+    }
+
+    char get_input()
+    {
+        return getchar();
     }
 
 #else
@@ -267,8 +276,7 @@ int game::snake_game()
         }
         if(cont)
         {
-            char ch;
-            scanf("%c", &ch);
+            char ch = get_input();
             int k = 0;
             if(ch == 27)
             {
